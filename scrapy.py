@@ -61,6 +61,21 @@ html = dados.get_attribute("innerHTML")
 soup = BeautifulSoup(html, "html.parser")
 table7 = soup.select_one("tbody")
 
-a = pd.read_html(str(table7))
+bs = BeautifulSoup()
+correios = bs.select('table7')
 
-print(a)
+localidade = []
+CEP = []
+
+for itens in correios:
+	localidade.append(itens.find('td', style_ ='font-family: Arial;width: 100px;margin: 0;height: 20px;border: 1px solid #CFCFCF;color: black;padding: 3px;font-size: 1.1em;').get_text())
+	CEP.append(itens.find('td', width_ = '80').get_text())
+	
+df = pd.DataFrame({
+	"localidade" : localidade,
+	"CEP" : CEP   
+	 })
+	
+
+df.head()
+print(df)
